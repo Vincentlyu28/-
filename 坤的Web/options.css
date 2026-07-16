@@ -1,0 +1,160 @@
+/* ============================================================================
+   高级感 · 三个方向  —  shared + per-option styles
+   A 浅雾留白·画廊   B 深蓝电影感   C 全幅大图·杂志封面
+   克制青蓝 · 真实101照片 · 含蓄文化元素 · 无玻璃质感
+   ========================================================================== */
+
+.ab {
+  position: relative; width: 1360px; height: 860px; overflow: hidden;
+  font-family: "Noto Sans SC", system-ui, "PingFang SC", sans-serif;
+  -webkit-font-smoothing: antialiased; line-height: 1.6;
+}
+.ab * { box-sizing: border-box; margin: 0; padding: 0; }
+.ab .cn { font-family: "Noto Serif SC", serif; }
+.ab .gr { font-family: "Space Grotesk", sans-serif; }
+.ab .cm { font-family: "Cormorant Garamond", serif; }
+.ab img { display: block; }
+.ab a { text-decoration: none; color: inherit; }
+
+/* 朱印 seal */
+.seal {
+  display: grid; place-items: center; border-radius: 6px;
+  font-family: "Noto Serif SC", serif; font-weight: 700; color: #fff1ea;
+  background: radial-gradient(120% 120% at 30% 22%, #d6493a 0%, #c0392b 58%, #9c2c20 100%);
+  box-shadow: inset 0 0 0 1.4px rgba(255,236,228,0.38);
+}
+
+/* coin mark 方孔圆钱 */
+.coin { border-radius: 50%; position: relative; display: grid; place-items: center; }
+.coin::before { content: ""; position: absolute; }
+
+/* ====================================================================== A 浅雾留白 */
+.v-a {
+  background:
+    radial-gradient(70% 50% at 86% -6%, #f3f8f8 0%, transparent 55%),
+    linear-gradient(168deg, #eef3f4 0%, #e4ebec 100%);
+  color: #16262c;
+  padding: 64px 76px;
+  display: grid; grid-template-columns: 1fr 420px; grid-template-rows: auto 1fr auto;
+  column-gap: 70px; row-gap: 0;
+}
+.v-a .topbar { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; }
+.v-a .coin { width: 34px; height: 34px; border: 1.5px solid #16262c; }
+.v-a .coin::before { width: 11px; height: 11px; border: 1.5px solid #16262c; }
+.v-a .brand { display: flex; align-items: center; gap: 13px; }
+.v-a .brand .z { font-size: 16px; font-weight: 600; letter-spacing: .14em; }
+.v-a .brand .e { font-size: 9.5px; letter-spacing: .26em; color: #7d949b; margin-top: 2px; }
+.v-a .tb-r { text-align: right; }
+.v-a .tb-r .z { font-family: "Noto Serif SC", serif; font-size: 13px; letter-spacing: .22em; }
+.v-a .tb-r .e { font-size: 9px; letter-spacing: .26em; color: #7d949b; }
+
+.v-a .who { align-self: center; max-width: 620px; }
+.v-a .figrow { display: flex; align-items: center; gap: 18px; margin-bottom: 30px; }
+.v-a .pf { position: relative; width: 92px; height: 116px; border-radius: 3px; overflow: hidden; box-shadow: 0 16px 30px -18px rgba(20,50,60,0.5); }
+.v-a .pf img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.25) contrast(1.02); }
+.v-a .pf .seal { position: absolute; right: -10px; bottom: -10px; width: 34px; height: 34px; font-size: 17px; transform: rotate(-5deg); }
+.v-a .eyebrow { font-size: 12.5px; letter-spacing: .04em; color: #3c5158; }
+.v-a .eyebrow .e { font-family: "Space Grotesk", sans-serif; font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: #2f7882; margin-left: 8px; }
+.v-a h1 { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 92px; line-height: .98; letter-spacing: .06em; }
+.v-a .rom { font-family: "Space Grotesk", sans-serif; font-size: 22px; letter-spacing: .14em; color: #5b727a; margin: 14px 0 0; }
+.v-a .slogan { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 38px; line-height: 1.1; margin-top: 26px; color: #1b2e35; }
+.v-a .slogan .s { color: #9bb0b5; font-style: normal; padding: 0 6px; }
+
+.v-a .tower { grid-row: 2 / 3; grid-column: 2; align-self: center; position: relative; }
+.v-a .tower .frame { position: relative; width: 100%; height: 540px; border-radius: 4px; overflow: hidden; box-shadow: 0 30px 60px -34px rgba(20,50,60,0.6); }
+.v-a .tower .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 24%; filter: saturate(.78) contrast(1.03) brightness(1.02); }
+.v-a .tower .frame::after { content: ""; position: absolute; inset: 0; background: rgba(64,124,134,0.12); mix-blend-mode: multiply; }
+.v-a .tower .vcap { position: absolute; left: -34px; top: 0; writing-mode: vertical-rl; text-orientation: upright; font-family: "Noto Serif SC", serif; font-size: 14px; letter-spacing: .4em; color: #5b727a; }
+.v-a .tower .tag { position: absolute; right: 0; bottom: -26px; font-family: "Space Grotesk", sans-serif; font-size: 9px; letter-spacing: .26em; text-transform: uppercase; color: #8aa0a6; }
+
+.v-a .foot { grid-column: 1 / 2; align-self: end; }
+.v-a .mods { display: flex; gap: 0; border-top: 1px solid #cdd8da; }
+.v-a .mod { flex: 1; padding: 20px 22px 4px 0; display: flex; align-items: baseline; gap: 12px; border-right: 1px solid #cdd8da; }
+.v-a .mod:last-child { border-right: 0; }
+.v-a .mod .n { font-family: "Noto Serif SC", serif; font-size: 17px; color: #2f7882; }
+.v-a .mod .t { font-family: "Noto Serif SC", serif; font-size: 18px; font-weight: 600; }
+.v-a .mod .e { font-family: "Space Grotesk", sans-serif; font-size: 8.5px; letter-spacing: .22em; text-transform: uppercase; color: #9bb0b5; display: block; margin-top: 3px; }
+.v-a .mod .st { margin-left: auto; font-family: "Space Grotesk", sans-serif; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #aebec1; }
+.v-a .mod.on .st { color: #2f7882; }
+.v-a .contacts { display: flex; align-items: center; gap: 20px; margin-top: 22px; font-size: 12.5px; color: #5b727a; }
+.v-a .contacts .soc { color: #3c5158; }
+.v-a .contacts .mail { font-family: "Space Grotesk", sans-serif; margin-left: auto; color: #2f7882; }
+
+/* ====================================================================== B 深蓝电影 */
+.v-b {
+  background: linear-gradient(150deg, #11242b 0%, #0a161b 100%);
+  color: #f1ece1;
+}
+.v-b .photo { position: absolute; right: 0; top: 0; width: 46%; height: 100%; }
+.v-b .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 46% 40%; filter: brightness(.92) contrast(1.05) saturate(.92); }
+.v-b .photo::after { content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, #0d1f25 0%, rgba(13,31,37,0.5) 26%, rgba(13,31,37,0.12) 60%, transparent 100%); }
+.v-b .photo .vcap { position: absolute; right: 30px; top: 50%; transform: translateY(-50%); writing-mode: vertical-rl; text-orientation: upright; font-family: "Noto Serif SC", serif; font-size: 15px; letter-spacing: .42em; color: rgba(255,255,255,.78); }
+
+.v-b .inner { position: relative; z-index: 2; height: 100%; width: 60%; padding: 60px 0 56px 76px; display: flex; flex-direction: column; }
+.v-b .topbar { display: flex; align-items: center; gap: 13px; }
+.v-b .coin { width: 34px; height: 34px; border: 1.5px solid #c6a662; }
+.v-b .coin::before { width: 11px; height: 11px; border: 1.5px solid #c6a662; }
+.v-b .brand .z { font-family: "Noto Serif SC", serif; font-size: 16px; font-weight: 600; letter-spacing: .14em; }
+.v-b .brand .e { font-size: 9.5px; letter-spacing: .26em; color: rgba(241,236,225,.55); margin-top: 2px; }
+
+.v-b .who { margin-top: auto; }
+.v-b .figrow { display: flex; align-items: flex-end; gap: 20px; margin-bottom: 26px; }
+.v-b .pf { position: relative; width: 88px; height: 110px; border-radius: 3px; overflow: hidden; box-shadow: 0 18px 34px -18px rgba(0,0,0,0.7); }
+.v-b .pf img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.2) contrast(1.04) brightness(.98); }
+.v-b .pf .seal { position: absolute; right: -10px; bottom: -10px; width: 34px; height: 34px; font-size: 17px; transform: rotate(-5deg); }
+.v-b .eyebrow { font-family: "Noto Serif SC", serif; font-size: 13px; letter-spacing: .06em; color: rgba(241,236,225,.8); padding-bottom: 6px; }
+.v-b .eyebrow .e { font-family: "Space Grotesk", sans-serif; font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: #c6a662; margin-left: 8px; }
+.v-b h1 { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 96px; line-height: .96; letter-spacing: .06em; color: #fbf8f1; }
+.v-b .rom { font-family: "Space Grotesk", sans-serif; font-size: 22px; letter-spacing: .14em; color: rgba(241,236,225,.62); margin-top: 14px; }
+.v-b .slogan { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 40px; line-height: 1.08; margin-top: 24px; color: #f3eee3; }
+.v-b .slogan .s { color: #c6a662; font-style: normal; padding: 0 8px; }
+
+.v-b .foot { margin-top: 40px; }
+.v-b .mods { display: flex; gap: 34px; }
+.v-b .mod { display: flex; align-items: baseline; gap: 11px; }
+.v-b .mod .n { font-family: "Noto Serif SC", serif; font-size: 16px; color: #c6a662; }
+.v-b .mod .t { font-family: "Noto Serif SC", serif; font-size: 18px; font-weight: 600; }
+.v-b .mod .e { font-family: "Space Grotesk", sans-serif; font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(241,236,225,.4); display: block; margin-top: 3px; }
+.v-b .mod.on .t { border-bottom: 1px solid #c6a662; padding-bottom: 2px; }
+.v-b .contacts { display: flex; align-items: center; gap: 18px; margin-top: 26px; font-size: 12.5px; color: rgba(241,236,225,.66); }
+.v-b .contacts .mail { font-family: "Space Grotesk", sans-serif; margin-left: 6px; color: rgba(241,236,225,.8); }
+
+/* ====================================================================== C 全幅大图 */
+.v-c { background: #0b1418; color: #fff; }
+.v-c .bg { position: absolute; inset: 0; }
+.v-c .bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 36%; filter: contrast(1.04) saturate(.96); }
+.v-c .bg::after { content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(8,18,22,0.55) 0%, transparent 22%, transparent 50%, rgba(7,16,20,0.82) 100%),
+    linear-gradient(75deg, rgba(7,16,20,0.7) 0%, rgba(7,16,20,0.2) 42%, transparent 70%); }
+.v-c .layer { position: relative; z-index: 2; height: 100%; padding: 56px 72px 54px; display: flex; flex-direction: column; }
+.v-c .topbar { display: flex; align-items: center; justify-content: space-between; }
+.v-c .brand { display: flex; align-items: center; gap: 13px; }
+.v-c .coin { width: 34px; height: 34px; border: 1.5px solid rgba(255,255,255,.85); }
+.v-c .coin::before { width: 11px; height: 11px; border: 1.5px solid rgba(255,255,255,.85); }
+.v-c .brand .z { font-family: "Noto Serif SC", serif; font-size: 16px; font-weight: 600; letter-spacing: .14em; }
+.v-c .brand .e { font-size: 9.5px; letter-spacing: .26em; color: rgba(255,255,255,.6); margin-top: 2px; }
+.v-c .tb-r { text-align: right; }
+.v-c .tb-r .z { font-family: "Noto Serif SC", serif; font-size: 13px; letter-spacing: .22em; }
+.v-c .tb-r .e { font-size: 9px; letter-spacing: .26em; color: rgba(255,255,255,.6); }
+.v-c .vcap { position: absolute; right: 40px; top: 130px; writing-mode: vertical-rl; text-orientation: upright; font-family: "Noto Serif SC", serif; font-size: 15px; letter-spacing: .42em; color: rgba(255,255,255,.82); z-index: 3; }
+
+.v-c .who { margin-top: auto; max-width: 760px; }
+.v-c .eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: "Noto Serif SC", serif; font-size: 14px; letter-spacing: .06em; color: rgba(255,255,255,.9); margin-bottom: 16px; }
+.v-c .eyebrow .seal { width: 38px; height: 38px; font-size: 19px; transform: rotate(-5deg); }
+.v-c .eyebrow .e { font-family: "Space Grotesk", sans-serif; font-size: 9.5px; letter-spacing: .26em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+.v-c h1 { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 108px; line-height: .94; letter-spacing: .05em; text-shadow: 0 4px 40px rgba(0,0,0,.4); }
+.v-c .rom { font-family: "Space Grotesk", sans-serif; font-size: 24px; letter-spacing: .16em; color: rgba(255,255,255,.82); margin-top: 16px; }
+.v-c .slogan { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 44px; line-height: 1.06; margin-top: 22px; color: #fff; text-shadow: 0 2px 30px rgba(0,0,0,.35); }
+.v-c .slogan .s { color: rgba(255,255,255,.6); font-style: normal; padding: 0 8px; }
+
+.v-c .foot { margin-top: 36px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.v-c .mods { display: flex; gap: 30px; }
+.v-c .mod { display: flex; align-items: baseline; gap: 10px; }
+.v-c .mod .n { font-family: "Noto Serif SC", serif; font-size: 16px; color: rgba(255,255,255,.7); }
+.v-c .mod .t { font-family: "Noto Serif SC", serif; font-size: 18px; font-weight: 600; }
+.v-c .mod .e { font-family: "Space Grotesk", sans-serif; font-size: 8.5px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.55); display: block; margin-top: 3px; }
+.v-c .mod.on .t { border-bottom: 1px solid rgba(255,255,255,.85); padding-bottom: 2px; }
+.v-c .contacts { display: flex; align-items: center; gap: 16px; font-size: 12px; color: rgba(255,255,255,.78); white-space: nowrap; }
+.v-c .contacts .mail { font-family: "Space Grotesk", sans-serif; }

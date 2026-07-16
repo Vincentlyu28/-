@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>阅读分享 · 山甲实验室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,500;1,500;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --paper: #f5f1e8;
+  --paper-2: #ede7db;
+  --panel: #fffaf0;
+  --panel-cool: #edf4f2;
+  --ink: #17232a;
+  --ink-soft: #40525a;
+  --muted: #7c7a70;
+  --faint: #aaa395;
+  --line: rgba(23, 35, 42, .14);
+  --line-strong: rgba(23, 35, 42, .32);
+  --teal: #0f6f73;
+  --teal-deep: #0a4f58;
+  --brass: #a57b3f;
+  --seal: #a73528;
+  --blue: #315c74;
+  --green: #4d765d;
+  --shadow: 8px 8px 0 rgba(23,35,42,.10);
+  --shadow-hover: 12px 12px 0 rgba(15,111,115,.18);
+  --track: .18em;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(23,35,42,.055) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(23,35,42,.045) 1px, transparent 1px),
+    linear-gradient(180deg, var(--paper) 0%, #f8f4eb 56%, var(--paper-2) 100%);
+  background-size: 42px 42px, 42px 42px, auto;
+  color: var(--ink);
+  font-family: "Noto Sans SC", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+::selection { background: rgba(15,111,115,.16); }
+
+.page {
+  position: relative;
+  max-width: 1320px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px clamp(20px, 4.7vw, 66px) 34px;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 28px);
+  margin: 0 calc(clamp(20px, 4.7vw, 66px) * -1);
+  padding: 7px clamp(20px, 4.7vw, 66px) 8px;
+  border-bottom: 1px solid var(--line-strong);
+  background:
+    linear-gradient(90deg, rgba(23,35,42,.055) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(23,35,42,.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(245,241,232,.96), rgba(248,244,235,.94));
+  background-size: 42px 42px, 42px 42px, auto;
+  box-shadow: 0 12px 28px -28px rgba(23,35,42,.55);
+}
+.mark { display: flex; align-items: center; }
+.brand-logo {
+  display: block;
+  width: clamp(78px, 8vw, 106px);
+  height: auto;
+  object-fit: contain;
+}
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 2px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--teal);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .18s ease;
+}
+.nav-link:hover,
+.nav-link.active { color: var(--teal-deep); background: rgba(15,111,115,.06); }
+.nav-link:hover::after,
+.nav-link.active::after { transform: scaleX(1); }
+.tb-right { text-align: right; }
+.tb-right .a { font-family: "Noto Serif SC", serif; font-size: 13px; color: var(--ink); letter-spacing: .2em; }
+.tb-right .b { font-family: "Space Grotesk", sans-serif; font-size: 9.5px; letter-spacing: var(--track); color: var(--muted); white-space: nowrap; }
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.16fr) minmax(300px, .84fr);
+  gap: clamp(28px, 4.5vw, 64px);
+  align-items: end;
+  min-height: clamp(430px, 56vh, 610px);
+  padding: 48px 0 30px;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.eyebrow .tick { width: 38px; height: 3px; background: var(--teal); }
+.eyebrow .txt {
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+  letter-spacing: .06em;
+}
+.eyebrow .en {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1 {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(58px, 8vw, 112px);
+  line-height: .92;
+  letter-spacing: .04em;
+  font-weight: 700;
+}
+.hero-copy {
+  margin-top: 24px;
+  max-width: 680px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  font-size: clamp(17px, 1.7vw, 22px);
+  line-height: 1.55;
+}
+.hero-copy strong {
+  color: var(--teal-deep);
+  font-family: "Noto Serif SC", serif;
+  font-weight: 700;
+}
+.hero-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+.tool-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  border-radius: 2px;
+  color: var(--ink);
+  font-size: 13px;
+  letter-spacing: .04em;
+  transition: color .18s, border-color .18s, transform .18s;
+}
+.tool-link:hover { color: var(--teal); border-color: var(--teal); transform: translateY(-2px); }
+
+.radar {
+  position: relative;
+  border: 1px solid var(--ink);
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  min-height: 324px;
+  overflow: hidden;
+}
+.radar::before {
+  content: "三";
+  position: absolute;
+  right: 18px;
+  top: 4px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 122px;
+  line-height: 1;
+  color: rgba(15,111,115,.08);
+}
+.radar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-strong);
+  position: relative;
+  z-index: 1;
+}
+.radar-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--teal-deep);
+  font-weight: 700;
+}
+.radar-date {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: .08em;
+}
+.radar-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.metric {
+  min-height: 94px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: rgba(237,244,242,.55);
+}
+.metric .num {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--teal-deep);
+}
+.metric .lab {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.radar-note {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  padding-left: 13px;
+  border-left: 3px solid var(--brass);
+  color: var(--ink-soft);
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: 24px;
+  font-style: italic;
+  line-height: 1.12;
+}
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 36px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line-strong);
+}
+.section-kicker {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--brass);
+  font-weight: 700;
+}
+h2 {
+  margin-top: 3px;
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.12;
+  letter-spacing: .04em;
+}
+.section-meta {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.filter-btn {
+  min-height: 34px;
+  border: 1px solid var(--line-strong);
+  background: var(--panel);
+  color: var(--ink-soft);
+  border-radius: 2px;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.filter-btn:hover { color: var(--teal-deep); border-color: var(--teal); }
+.filter-btn.is-active {
+  background: var(--teal-deep);
+  color: #fffaf0;
+  border-color: var(--teal-deep);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(280px, .86fr);
+  gap: 16px;
+}
+.feature-card,
+.reading-card,
+.shelf-card,
+.queue-card {
+  border: 1px solid var(--ink);
+  background: var(--panel);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+}
+.feature-card {
+  display: grid;
+  min-height: 410px;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.feature-card:hover,
+.reading-card:hover,
+.shelf-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--teal);
+}
+.feature-media {
+  min-height: 210px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--panel-cool);
+  overflow: hidden;
+}
+.feature-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+  display: block;
+}
+.feature-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+.source-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.source {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line-strong);
+  background: rgba(237,244,242,.72);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--teal-deep);
+  font-weight: 700;
+}
+.date {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+}
+.feature-title {
+  font-family: "Noto Serif SC", serif;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.12;
+  letter-spacing: .02em;
+}
+.note {
+  margin-top: 14px;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+.quote {
+  margin-top: 18px;
+  padding-left: 13px;
+  border-left: 3px solid var(--brass);
+  font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+  font-size: 24px;
+  line-height: 1.12;
+  color: var(--teal-deep);
+  font-style: italic;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 18px;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.34);
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+.mini-stack {
+  display: grid;
+  gap: 16px;
+}
+.mini-card {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 14px;
+  min-height: 126px;
+  padding: 12px;
+  border: 1px solid var(--ink);
+  background: var(--panel);
+  box-shadow: 6px 6px 0 rgba(23,35,42,.08);
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.mini-card:hover {
+  transform: translate(-2px,-2px);
+  border-color: var(--teal);
+  box-shadow: 9px 9px 0 rgba(15,111,115,.14);
+}
+.mini-thumb {
+  background: var(--panel-cool);
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+}
+.mini-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini-title {
+  font-family: "Noto Serif SC", serif;
+  font-size: 18px;
+  line-height: 1.24;
+}
+.mini-note {
+  margin-top: 7px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.content-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 18px;
+  align-items: start;
+}
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.reading-card {
+  min-height: 244px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.reading-title {
+  font-family: "Noto Serif SC", serif;
+  font-size: 22px;
+  line-height: 1.22;
+  letter-spacing: .02em;
+}
+.reading-author {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.reading-card .note { font-size: 14px; }
+.reading-card .tags { margin-top: auto; padding-top: 16px; }
+.side-panel {
+  position: sticky;
+  top: 72px;
+  display: grid;
+  gap: 14px;
+}
+.queue-card {
+  padding: 17px;
+}
+.queue-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line-strong);
+}
+.queue-title strong {
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: .04em;
+}
+.queue-title span {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  color: var(--muted);
+}
+.queue-list {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.queue-list a {
+  display: grid;
+  gap: 3px;
+  padding-left: 11px;
+  border-left: 3px solid var(--brass);
+}
+.queue-list b {
+  font-family: "Noto Serif SC", serif;
+  font-size: 15px;
+  line-height: 1.25;
+}
+.queue-list span {
+  color: var(--muted);
+  font-size: 12px;
+}
+.digest {
+  border: 1px solid var(--ink);
+  background: var(--teal-deep);
+  color: #fffaf0;
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+.digest .label {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: rgba(255,250,240,.72);
+}
+.digest p {
+  margin-top: 12px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 20px;
+  line-height: 1.32;
+}
+
+.shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+.shelf-card {
+  min-height: 210px;
+  padding: 18px;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+}
+.shelf-index {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 12px;
+  color: var(--brass);
+  font-weight: 700;
+}
+.shelf-card h3 {
+  margin-top: 26px;
+  font-family: "Noto Serif SC", serif;
+  font-size: 24px;
+  line-height: 1.16;
+  letter-spacing: .04em;
+}
+.shelf-card p {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+.shelf-count {
+  display: inline-flex;
+  margin-top: 18px;
+  min-height: 25px;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line-strong);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.foot .serif-cn {
+  font-family: "Noto Serif SC", serif;
+  letter-spacing: .2em;
+  text-transform: none;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 1020px) {
+  .hero,
+  .featured-grid,
+  .content-layout { grid-template-columns: 1fr; }
+  .side-panel { position: static; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .shelf-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .page { padding: 26px 22px 30px; }
+  .topbar {
+    grid-template-columns: auto auto;
+    margin: 0 -22px;
+    padding: 7px 22px 8px;
+  }
+  .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .tb-right .b { display: none; }
+  .hero { min-height: 0; padding: 30px 0 18px; }
+  .radar-grid,
+  .reading-grid,
+  .shelf-grid,
+  .side-panel { grid-template-columns: 1fr; }
+  .feature-card { min-height: 0; }
+  .mini-card { grid-template-columns: 78px minmax(0, 1fr); }
+  .section-head { align-items: flex-start; flex-direction: column; }
+  .section-meta { white-space: normal; }
+  .foot { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <a class="mark" href="./Home%20(1).html" aria-label="返回首页">
+      <img class="brand-logo" src="assets/pangolin-logo.png" alt="穿山甲 Pangolin" />
+    </a>
+    <nav class="site-nav" aria-label="阅读分享导航">
+      <a class="nav-link" href="./Home%20(1).html">首页</a>
+      <a class="nav-link" href="./Knowledge%20Base%20(1).html">知识库</a>
+      <a class="nav-link" href="./%E6%B5%8B%E8%AF%84web/index.html">测评系统</a>
+      <a class="nav-link active" href="#dispatch">阅读分享</a>
+      <a class="nav-link" href="#archive">归档</a>
+      <a class="nav-link" href="#contact">联系</a>
+    </nav>
+    <div class="tb-right">
+      <div class="a">READING 003</div>
+      <div class="b">BOOKS · NOTES · MARGINS</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="dispatch">
+      <div>
+        <div class="eyebrow">
+          <span class="tick"></span>
+          <span class="txt">山甲实验室读信</span>
+          <span class="en">Reading Dispatch</span>
+        </div>
+        <h1>阅读分享</h1>
+        <p class="hero-copy">
+          放我读过的书、正在读的书，以及那些还没写完整、但已经开始在脑子里发酵的笔记。
+        </p>
+        <div class="hero-tools">
+          <a class="tool-link" href="#featured">本周精选</a>
+          <a class="tool-link" href="#archive">阅读归档</a>
+          <a class="tool-link" href="https://x.com/LyuVincent" target="_blank" rel="noopener">X</a>
+        </div>
+      </div>
+
+      <aside class="radar" aria-label="阅读雷达">
+        <div class="radar-head">
+          <span class="radar-title">Reading Desk</span>
+          <span class="radar-date">Jun 2026</span>
+        </div>
+        <div class="radar-grid">
+          <div class="metric"><span class="num">1</span><span class="lab">最近在读</span></div>
+          <div class="metric"><span class="num">6</span><span class="lab">笔记雏形</span></div>
+          <div class="metric"><span class="num">4</span><span class="lab">主题书架</span></div>
+          <div class="metric"><span class="num">3</span><span class="lab">待读队列</span></div>
+        </div>
+        <p class="radar-note">Read slowly. Keep the margin notes alive.</p>
+      </aside>
+    </section>
+
+    <section id="featured">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Curated</div>
+          <h2>本周精选</h2>
+        </div>
+        <div class="section-meta">Books · Notes · Margins</div>
+      </div>
+
+      <div class="featured-grid">
+        <a class="feature-card" href="#">
+          <div class="feature-media">
+            <div style="height:100%;min-height:210px;display:grid;place-items:center;background:linear-gradient(135deg,#0f6f73,#315c74 58%,#a57b3f);color:#fffaf0;font-family:'Noto Serif SC',serif;font-size:44px;letter-spacing:.12em;">天龙八部</div>
+          </div>
+          <div class="feature-body">
+            <div class="source-line">
+              <span class="source">小说</span>
+              <span class="date">最近在读 · 金庸</span>
+            </div>
+            <div class="feature-title">《天龙八部》</div>
+            <p class="note">先放一个读书卡片位置。后面可以慢慢补：人物线、命运感、佛性、江湖秩序，或者单纯记录某一章读完后的感觉。</p>
+            <p class="quote">无人不冤，有情皆孽。</p>
+            <div class="tags">
+              <span class="tag">武侠</span>
+              <span class="tag">金庸</span>
+              <span class="tag">正在读</span>
+            </div>
+          </div>
+        </a>
+
+        <div class="mini-stack">
+          <a class="mini-card" href="#">
+            <div class="mini-thumb"></div>
+            <div>
+              <div class="source-line"><span class="source">随笔</span><span class="date">待补</span></div>
+              <div class="mini-title">人物关系笔记</div>
+              <p class="mini-note">乔峰、段誉、虚竹三条线，可以先拆成命运、身份和选择。</p>
+            </div>
+          </a>
+          <a class="mini-card" href="#">
+            <div class="mini-thumb"></div>
+            <div>
+              <div class="source-line"><span class="source">摘录</span><span class="date">待补</span></div>
+              <div class="mini-title">好句与段落</div>
+              <p class="mini-note">把读到时停顿的句子放在这里，之后再整理成完整笔记。</p>
+            </div>
+          </a>
+          <a class="mini-card" href="#" aria-label="读后问题">
+            <div class="mini-thumb"></div>
+            <div>
+              <div class="source-line"><span class="source">问题</span><span class="date">待补</span></div>
+              <div class="mini-title">读完后想继续想的问题</div>
+              <p class="mini-note">比如“侠义”和“执念”的边界，后面可以慢慢写。</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="archive">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Archive</div>
+          <h2>阅读归档</h2>
+        </div>
+        <div class="section-meta" id="resultCount">6 records</div>
+      </div>
+
+      <div class="filters" aria-label="主题筛选">
+        <button class="filter-btn is-active" type="button" data-filter="All">全部</button>
+        <button class="filter-btn" type="button" data-filter="小说">小说</button>
+        <button class="filter-btn" type="button" data-filter="笔记">笔记</button>
+        <button class="filter-btn" type="button" data-filter="摘录">摘录</button>
+        <button class="filter-btn" type="button" data-filter="人物">人物</button>
+        <button class="filter-btn" type="button" data-filter="待读">待读</button>
+      </div>
+
+      <div class="content-layout">
+        <div class="reading-grid" id="readingGrid">
+          <a class="reading-card" href="#" data-tags="小说 笔记 人物">
+            <div class="source-line"><span class="source">正在读</span><span class="date">最近</span></div>
+            <div class="reading-title">《天龙八部》</div>
+            <div class="reading-author">金庸 · 长篇小说</div>
+            <p class="note">先占位：人物、命运、佛性和江湖秩序，后面慢慢补读书笔记。</p>
+            <div class="tags"><span class="tag">小说</span><span class="tag">人物</span><span class="tag">笔记</span></div>
+          </a>
+          <a class="reading-card" href="#" data-tags="笔记 人物">
+            <div class="source-line"><span class="source">笔记</span><span class="date">待写</span></div>
+            <div class="reading-title">乔峰：身份、义气与命运</div>
+            <div class="reading-author">《天龙八部》人物线</div>
+            <p class="note">这个位置可以写一篇人物读后感，不急着完整，先留结构。</p>
+            <div class="tags"><span class="tag">人物</span><span class="tag">笔记</span></div>
+          </a>
+          <a class="reading-card" href="#" data-tags="摘录 小说">
+            <div class="source-line"><span class="source">摘录</span><span class="date">待补</span></div>
+            <div class="reading-title">《天龙八部》摘录</div>
+            <div class="reading-author">读到停顿处</div>
+            <p class="note">放原文摘句、页码、章节和当时的感受。</p>
+            <div class="tags"><span class="tag">摘录</span><span class="tag">小说</span></div>
+          </a>
+          <a class="reading-card" href="#" data-tags="笔记 小说">
+            <div class="source-line"><span class="source">主题</span><span class="date">待写</span></div>
+            <div class="reading-title">“无人不冤，有情皆孽”</div>
+            <div class="reading-author">主题笔记</div>
+            <p class="note">可以写成一篇关于执念、因果和悲悯的短笔记。</p>
+            <div class="tags"><span class="tag">小说</span><span class="tag">笔记</span></div>
+          </a>
+          <a class="reading-card" href="#" data-tags="待读 小说">
+            <div class="source-line"><span class="source">待读</span><span class="date">Queue</span></div>
+            <div class="reading-title">下一本书占位</div>
+            <div class="reading-author">等你补书名</div>
+            <p class="note">后面你告诉我书名、作者、状态，我就按这个卡片结构填进去。</p>
+            <div class="tags"><span class="tag">待读</span><span class="tag">小说</span></div>
+          </a>
+          <a class="reading-card" href="#" data-tags="笔记">
+            <div class="source-line"><span class="source">随笔</span><span class="date">Draft</span></div>
+            <div class="reading-title">读书方法小记</div>
+            <div class="reading-author">边读边记</div>
+            <p class="note">这里可以放你的读书习惯、标注方式、复盘方法。</p>
+            <div class="tags"><span class="tag">笔记</span></div>
+          </a>
+        </div>
+
+        <aside class="side-panel">
+          <div class="queue-card">
+            <div class="queue-title"><strong>Reading Queue</strong><span>Next 3</span></div>
+            <ul class="queue-list">
+              <li><a href="#"><b>《天龙八部》人物线整理</b><span>笔记 · 待写</span></a></li>
+              <li><a href="#"><b>下一本待读书</b><span>书名待补</span></a></li>
+              <li><a href="#"><b>摘录与页码</b><span>慢慢沉淀</span></a></li>
+            </ul>
+          </div>
+          <div class="digest">
+            <div class="label">Monthly judgement</div>
+            <p>这里先不求完整，先让每本书都有一个可以继续生长的位置。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Shelves</div>
+          <h2>主题书架</h2>
+        </div>
+        <div class="section-meta">Signal clusters</div>
+      </div>
+      <div class="shelf-grid">
+        <a class="shelf-card" href="#archive" data-shelf="小说">
+          <div class="shelf-index">01</div>
+          <h3>小说</h3>
+          <p>长篇、人物、命运感和读完之后还会回来的段落。</p>
+          <span class="shelf-count">3 records</span>
+        </a>
+        <a class="shelf-card" href="#archive" data-shelf="人物">
+          <div class="shelf-index">02</div>
+          <h3>人物</h3>
+          <p>把人物线拆开，看选择、性格、身份和命运。</p>
+          <span class="shelf-count">2 records</span>
+        </a>
+        <a class="shelf-card" href="#archive" data-shelf="摘录">
+          <div class="shelf-index">03</div>
+          <h3>摘录</h3>
+          <p>句子、页码、章节和读到那一刻的反应。</p>
+          <span class="shelf-count">1 record</span>
+        </a>
+        <a class="shelf-card" href="#archive" data-shelf="待读">
+          <div class="shelf-index">04</div>
+          <h3>待读</h3>
+          <p>还没开始，但已经想给它留一个位置的书。</p>
+          <span class="shelf-count">1 record</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot" id="contact">
+    <span>© 2026 吕坤 Vincent</span>
+    <span class="serif-cn">山甲读信 · 節節高升</span>
+  </footer>
+</div>
+
+<script>
+const buttons = Array.from(document.querySelectorAll(".filter-btn"));
+const cards = Array.from(document.querySelectorAll(".reading-card"));
+const count = document.getElementById("resultCount");
+
+function applyFilter(value) {
+  let visible = 0;
+  cards.forEach((card) => {
+    const tags = card.dataset.tags || "";
+    const show = value === "All" || tags.includes(value);
+    card.style.display = show ? "" : "none";
+    if (show) visible += 1;
+  });
+  count.textContent = visible + " records";
+  buttons.forEach((btn) => btn.classList.toggle("is-active", btn.dataset.filter === value));
+}
+
+buttons.forEach((btn) => {
+  btn.addEventListener("click", () => applyFilter(btn.dataset.filter));
+});
+
+document.querySelectorAll("[data-shelf]").forEach((link) => {
+  link.addEventListener("click", () => {
+    window.setTimeout(() => applyFilter(link.dataset.shelf), 60);
+  });
+});
+</script>
+</body>
+</html>

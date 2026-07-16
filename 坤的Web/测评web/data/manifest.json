@@ -1,0 +1,8 @@
+{
+  "months": [
+    { "id": "2026-05", "label": "2026年5月", "file": "data/2026-05.json", "audience": "patient", "audienceLabel": "面向患者" },
+    { "id": "2026-04", "label": "2026年4月", "file": "data/2026-04.json", "audience": "doctor", "audienceLabel": "面向医生" },
+    { "id": "2026-03", "label": "2026年3月", "file": "data/2026-03.json", "audience": "doctor", "audienceLabel": "面向医生" }
+  ],
+  "current": "2026-05"
+}
